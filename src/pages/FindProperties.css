@@ -1,0 +1,47 @@
+.find-properties {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.find-properties-form {
+    margin: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.find-properties-form > label {
+    padding: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.find-file-input {
+    border: none;
+    width: 300px;
+    font-size: 18px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.find-file-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    color: rgb(126, 117, 117);
+    cursor: pointer;
+}
+
+.process-button {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+}
