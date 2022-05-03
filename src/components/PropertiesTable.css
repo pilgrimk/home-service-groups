@@ -34,3 +34,12 @@
 .content-table > tbody > tr:last-of-type {
     border-bottom: 2px solid #009879;
 }
+
+.detail-button {
+    width: 40px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background-color: #009879;
+}

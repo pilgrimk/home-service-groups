@@ -9,6 +9,19 @@ const api = {
         console.log(response);
       })
   },
+
+  uploadFile: function (file) {
+    const urlString = `${process.env.REACT_APP_API}api/parser/uploadfile`;
+
+    // pass data to Heroku as FormData !
+    const data = new FormData();
+    data.append("uploadedFile", file);
+
+    return axios.post(urlString, data)
+      .then(function (response) {
+        console.log(response);
+      })
+  },
   
   fetchProperties: function (fileName) {
     const urlString = `${process.env.REACT_APP_API}api/parser/parsefile`;
@@ -42,7 +55,7 @@ const api = {
             'sqFt': `${element.sqFt}`,
             'state': `${element.state}`,
             'streetLine': `${element.streetLine}`,
-            'timeOnRedfin': `${element.timeOnRedfin}`,
+            'daysListed': `${element.daysListed}`,
             'unitNumber': `${element.unitNumber}`,
             'url': `${element.url}`,
             'yearBuilt': `${element.yearBuilt}`,
@@ -50,19 +63,6 @@ const api = {
           }; 
         });
         return data;
-      })
-  },
-
-  uploadFile: function (file) {
-    const urlString = `${process.env.REACT_APP_API}api/parser/uploadfile`;
-
-    // pass data to Heroku as FormData !
-    const data = new FormData();
-    data.append("uploadedFile", file);
-
-    return axios.post(urlString, data)
-      .then(function (response) {
-        console.log(response);
       })
   }
 };

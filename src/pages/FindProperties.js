@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import PropertyTable from '../components/PropertiesTable'
-import prophelper from '../helpers/FindPropertyHelper'
-import './FindProperties.css'
+import React, { useState } from 'react';
+import PropertyTable from '../components/PropertiesTable';
+import prophelper from '../helpers/FindPropertyHelper';
+import './FindProperties.css';
 
 function FindProperties() {
     const [fileName, setFileName] = useState("");
@@ -10,7 +10,8 @@ function FindProperties() {
     const [error, setError] = useState(false);
 
     const handleSetFileName = async (file) => {
-        console.log(`handleFileInfo, fileInfo: ${file.name}`);
+        // clear the current file name
+        setFileName("");
 
         try {
             if (file) {
@@ -34,8 +35,6 @@ function FindProperties() {
         e.preventDefault();
         setError(false);
 
-        setFileName("www.redfin.com.short.har");
-
         // clear the current property data
         setProperties([]);
 
@@ -43,6 +42,7 @@ function FindProperties() {
             console.log(`fileName: ${fileName}`);
             const res_prop = await prophelper.fetchProperties(fileName);
             if (res_prop !== 'undefined') {
+                //console.log(res_prop);
                 setProperties(res_prop);
             }
         }
