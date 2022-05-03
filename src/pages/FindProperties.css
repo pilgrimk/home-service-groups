@@ -1,7 +1,13 @@
-.find-properties {
+.find-properties-containter {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.find-prop-input-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .find-properties-form {
@@ -20,6 +26,7 @@
     border: none;
     width: 300px;
     font-size: 18px;
+    color: rgb(126, 117, 117);
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -40,6 +47,18 @@
     width: 100px;
     height: 50px;
     border-radius: 10px;
+    margin: 0px 10px;
+    border: none;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+}
+
+.export-button {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    margin: 0px 10px;
     border: none;
     background-color: teal;
     color: white;

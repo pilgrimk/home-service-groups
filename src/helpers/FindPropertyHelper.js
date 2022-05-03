@@ -19,7 +19,7 @@ const api = {
 
     return axios.post(urlString, data)
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
       })
   },
   

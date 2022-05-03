@@ -56,7 +56,7 @@ export default function PropertiesTable({ properties }) {
                             <td>{data.daysListed}</td>
                             <td>
                                 <a href={data.url} target="_blank" rel="noreferrer">
-                                    <button class="detail-button fa-solid fa-ellipsis">...</button>
+                                    <button className="detail-button fa-solid fa-ellipsis">...</button>
                                 </a>
                             </td>
                         </tr>
