@@ -1,26 +1,13 @@
-import React, { useState } from 'react';
-import './PropertiesTable.css';
-import Pagination from './Pagination';
+import React from 'react'
+import './PropertiesTable.css'
 
-export default function PropertiesTable({ properties }) {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [propsPerPage] = useState(10);
-
-    //get current posts
-    const indexOfLastProp = currentPage * propsPerPage;
-    const indexOfFirstProp = indexOfLastProp - propsPerPage;
-    const currentProps = properties.slice(indexOfFirstProp, indexOfLastProp);
-
-    //change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+export default function PropertiesTable({ currentProps }) {
     function toCurrency(numberString) {
         let number = parseFloat(numberString);
         return number.toLocaleString('USD');
     }
 
     return (
-        <>
             <table className='content-table'>
                 <thead>
                     <tr>
@@ -30,7 +17,6 @@ export default function PropertiesTable({ properties }) {
                         <th>Beds</th>
                         <th>Baths</th>
                         <th>HOA</th>
-                        <th>Location</th>
                         <th>Address</th>
                         <th>City</th>
                         <th>State</th>
@@ -48,7 +34,6 @@ export default function PropertiesTable({ properties }) {
                             <td>{data.beds}</td>
                             <td>{data.baths}</td>
                             <td>{data.hoa}</td>
-                            <td>{data.location}</td>
                             <td>{data.streetLine}</td>
                             <td>{data.city}</td>
                             <td>{data.state}</td>
@@ -63,11 +48,5 @@ export default function PropertiesTable({ properties }) {
                     )
                 })}</tbody>
             </table>
-
-            <Pagination
-                propsPerPage={propsPerPage}
-                totalProps={properties.length}
-                paginate={paginate} />
-        </>
     )
 }

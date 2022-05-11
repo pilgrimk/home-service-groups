@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import PropertyTable from '../components/PropertiesTable';
-import prophelper from '../helpers/FindPropertyHelper';
-import './FindProperties.css';
-import { CSVLink } from 'react-csv';
+import React, { useState } from 'react'
+import Properties from '../components/Properties'
+import prophelper from '../helpers/FindPropertyHelper'
+import './FindProperties.css'
+import { CSVLink } from 'react-csv'
 
 function FindProperties() {
     const [fileName, setFileName] = useState("");
@@ -77,7 +77,7 @@ function FindProperties() {
                     <CSVLink className="csvlink-btn" data={properties} filename={`${fileName}.csv`}>Export</CSVLink>
                 </button>}
             </div>
-            {properties.length > 0 && <PropertyTable properties={properties} />}
+            {properties.length > 0 && <Properties properties={properties} />}
             {error && <span className="error-message">Something went wrong!</span>}
         </div>
     )

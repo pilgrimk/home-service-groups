@@ -1,11 +1,11 @@
-import './App.css';
-import Head from './components/Head';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import FindProperties from './pages/FindProperties';
-import TOS from './pages/TOS';
-import Privacy from './pages/Privacy';
-import NotFound from './pages/NotFound';
+import './App.css'
+import Head from './components/Head'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import FindProperties from './pages/FindProperties'
+import TOS from './pages/TOS'
+import Privacy from './pages/Privacy'
+import NotFound from './pages/NotFound'
 import {
     BrowserRouter as Router,
     Routes,
