@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FiAlignRight, FiXCircle, FiChevronDown } from "react-icons/fi";
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { FiAlignRight, FiXCircle, FiChevronDown } from "react-icons/fi"
 import './Navbar.css'
 
-function Navbar() {
+export default function Navbar() {
     const [isMenu, setisMenu] = useState(false);
     const [isResponsiveclose, setResponsiveclose] = useState(false);
 
@@ -88,5 +88,3 @@ function Navbar() {
         </header>
     )
 }
-
-export default Navbar;

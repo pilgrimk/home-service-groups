@@ -1,8 +1,8 @@
-import React from 'react';
-import Logo from "../videos/home-services-video.mp4";
-import './Home.css';
+import React from 'react'
+import Logo from "../videos/home-services-video.mp4"
+import './Home.css'
 
-const Home = () => {
+export default function Home() {
     const videoSrc = Logo;
     const poster = "/logo_1.png";
 
@@ -12,5 +12,3 @@ const Home = () => {
         </div>
     );
 }
-
-export default Home;

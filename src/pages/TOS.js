@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
-function TOS(props) {
+export default function TOS(props) {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -59,5 +59,3 @@ function TOS(props) {
         </div>
     )
 }
-
-export default TOS

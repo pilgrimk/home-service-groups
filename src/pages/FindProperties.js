@@ -4,7 +4,7 @@ import prophelper from '../helpers/FindPropertyHelper'
 import './FindProperties.css'
 import { CSVLink } from 'react-csv'
 
-function FindProperties() {
+export default function FindProperties() {
     const [fileName, setFileName] = useState("");
     const [properties, setProperties] = useState([]);
     const [error, setError] = useState(false);
@@ -82,5 +82,3 @@ function FindProperties() {
         </div>
     )
 }
-
-export default FindProperties

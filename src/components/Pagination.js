@@ -1,7 +1,7 @@
-import React from 'react';
-import './Pagination.css';
+import React from 'react'
+import './Pagination.css'
 
-const Pagination = ({ propsPerPage, totalProps, paginate }) => {
+export default function Pagination ({ propsPerPage, totalProps, paginate }) {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalProps / propsPerPage); i++) {
@@ -24,5 +24,3 @@ const Pagination = ({ propsPerPage, totalProps, paginate }) => {
         </nav>
     )
 }
-
-export default Pagination;

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
-function Privacy(props) {
+export default function Privacy(props) {
     const privacy_url = `${props.llc_url}/privacy`
 
     useEffect(() => {
@@ -183,5 +183,3 @@ function Privacy(props) {
         </div>
     )
 }
-
-export default Privacy;
