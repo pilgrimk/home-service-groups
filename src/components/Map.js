@@ -15,12 +15,16 @@ export default function Map(props) {
     const [lat, setLat] = useState(default_lat);
     const [zoom, setZoom] = useState(default_zoom);
 
+    const roundAccurately = (number, decimalPlaces) => {
+        return Number(Math.round(number + "e" + decimalPlaces) + "e-" + decimalPlaces);
+    }
+
     function resetMap(coords, zoom) {
-        if (map.current)  {
+        if (map.current) {
             map.current.setCenter(coords);
             map.current.setZoom(zoom);
         }
-      };
+    };
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -44,9 +48,9 @@ export default function Map(props) {
     }, [lng, lat, zoom]);
 
     useEffect(() => {
-        const calc_lng = props.currentProps.reduce((acc, data) => acc + Math.round(data.longitude), 0) / props.currentProps.length;
-        const calc_lat = props.currentProps.reduce((acc, data) => acc + Math.round(data.latitude), 0) / props.currentProps.length;
-        //console.log(`lng_total: ${calc_lng}, lat_total: ${calc_lat}`);
+        let calc_lng = roundAccurately(props.currentProps.reduce((acc, data) => acc + roundAccurately(data.longitude, 4), 0) / props.currentProps.length, 4);
+        let calc_lat = roundAccurately(props.currentProps.reduce((acc, data) => acc + roundAccurately(data.latitude, 4), 0) / props.currentProps.length, 4);
+        //console.log(`calc_lng: ${calc_lng}, calc_lat: ${calc_lat}`);
 
         setLng(calc_lng.toFixed(4));
         setLat(calc_lat.toFixed(4));
