@@ -14,6 +14,7 @@ export default function Map(props) {
     const [lng, setLng] = useState(default_lng);
     const [lat, setLat] = useState(default_lat);
     const [zoom, setZoom] = useState(default_zoom);
+    const [mapMarkers, setMapMarkers] = useState([]);
 
     const roundAccurately = (number, decimalPlaces) => {
         return Number(Math.round(number + "e" + decimalPlaces) + "e-" + decimalPlaces);
@@ -48,15 +49,44 @@ export default function Map(props) {
     }, [lng, lat, zoom]);
 
     useEffect(() => {
-        let calc_lng = roundAccurately(props.currentProps.reduce((acc, data) => acc + roundAccurately(data.longitude, 4), 0) / props.currentProps.length, 4);
-        let calc_lat = roundAccurately(props.currentProps.reduce((acc, data) => acc + roundAccurately(data.latitude, 4), 0) / props.currentProps.length, 4);
+        let calc_lng = roundAccurately(
+            props.currentProps.reduce((acc, data) => acc + roundAccurately(data.longitude, 4), 0) / props.currentProps.length, 4);
+        let calc_lat = roundAccurately(
+            props.currentProps.reduce((acc, data) => acc + roundAccurately(data.latitude, 4), 0) / props.currentProps.length, 4);
         //console.log(`calc_lng: ${calc_lng}, calc_lat: ${calc_lat}`);
 
         setLng(calc_lng.toFixed(4));
         setLat(calc_lat.toFixed(4));
         setZoom(default_zoom);
         resetMap([calc_lng, calc_lat], default_zoom);
-    }, [props.currentProps]);
+
+        //clear all markers
+        mapMarkers.forEach((marker) => marker.remove());
+        while (mapMarkers.length > 0) {
+            mapMarkers.pop();
+        }
+        setMapMarkers(mapMarkers);
+        //console.log(`number of markers: ${mapMarkers.length}`);  
+
+        //add markers to the map
+        props.currentProps.forEach((data) => {
+            //var popupText = `${data.streetLine} <br>` +
+            //    `$${data.price}`
+            var popupText = `${data.streetLine}, $${data.price} `
+            var popup = new mapboxgl.Popup()
+                .setText(popupText);
+
+            //console.log(`mapped lng: ${data.longitude}, lat: ${data.latitude}`)
+            const marker1 = new mapboxgl.Marker()
+                .setLngLat([data.longitude, data.latitude])
+                .setPopup(popup)
+                .addTo(map.current);
+
+            // add marker to array
+            mapMarkers.push(marker1);
+            setMapMarkers(mapMarkers);
+        });
+    }, [props.currentProps, mapMarkers]);
 
     return (
         <>
