@@ -1,0 +1,8 @@
+export { default as AboutUs } from './AboutUs'
+export { default as ContactUs } from './ContactUs'
+export { default as FindProperties } from './FindProperties'
+export { default as Home } from './Home'
+export { default as NotFound } from './NotFound'
+export { default as Privacy } from './Privacy'
+export { default as Products } from './Products'
+export { default as TOS } from './TOS'

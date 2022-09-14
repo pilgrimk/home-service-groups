@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import mapboxgl from '!mapbox-gl' // eslint-disable-line import/no-webpack-loader-syntax
 import './Map.css'
 
-export default function Map(props) {
+const Map = ({ currentProps }) => {
     mapboxgl.accessToken = `${process.env.REACT_APP_MAPBOX_API}`;
 
     const default_lng = -112.07;
@@ -50,9 +50,9 @@ export default function Map(props) {
 
     useEffect(() => {
         let calc_lng = roundAccurately(
-            props.currentProps.reduce((acc, data) => acc + roundAccurately(data.longitude, 4), 0) / props.currentProps.length, 4);
+            currentProps.reduce((acc, data) => acc + roundAccurately(data.longitude, 4), 0) / currentProps.length, 4);
         let calc_lat = roundAccurately(
-            props.currentProps.reduce((acc, data) => acc + roundAccurately(data.latitude, 4), 0) / props.currentProps.length, 4);
+            currentProps.reduce((acc, data) => acc + roundAccurately(data.latitude, 4), 0) / currentProps.length, 4);
         //console.log(`calc_lng: ${calc_lng}, calc_lat: ${calc_lat}`);
 
         setLng(calc_lng.toFixed(4));
@@ -69,9 +69,7 @@ export default function Map(props) {
         //console.log(`number of markers: ${mapMarkers.length}`);  
 
         //add markers to the map
-        props.currentProps.forEach((data) => {
-            //var popupText = `${data.streetLine} <br>` +
-            //    `$${data.price}`
+        currentProps.forEach((data) => {
             var popupText = `${data.streetLine}, $${data.price} `
             var popup = new mapboxgl.Popup()
                 .setText(popupText);
@@ -86,14 +84,16 @@ export default function Map(props) {
             mapMarkers.push(marker1);
             setMapMarkers(mapMarkers);
         });
-    }, [props.currentProps, mapMarkers]);
+    }, [currentProps, mapMarkers]);
 
     return (
-        <>
+        <div className="mapbox-container">
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
             <div ref={mapContainer} className="map-container" />
-        </>
+        </div>
     );
 }
+
+export default Map
