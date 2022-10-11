@@ -8,8 +8,8 @@ import {
   Input,
   Button
 } from '@mui/material'
-import { Properties } from '../components'
-import prophelper from '../helpers/FindPropertyHelper'
+import { Properties } from '../../components'
+import prophelper from '../../helpers/FindPropertyHelper'
 
 const FindProperties = () => {
   const [fileName, setFileName] = useState('');
