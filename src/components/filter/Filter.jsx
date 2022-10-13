@@ -25,12 +25,14 @@ const Filter = ({ handleApplyFilters }) => {
           id="min-price"
           label="Min Price"
           defaultValue="0"
+          type='number'
           onChange={(e) => setMinPrice(e.target.value)}
         />
         <TextField
           id="max-price"
           label="Max Price"
           defaultValue="0"
+          type='number'
           onChange={(e) => setMaxPrice(e.target.value)}
         />
       </div>
@@ -39,12 +41,14 @@ const Filter = ({ handleApplyFilters }) => {
           id="min-beds"
           label="Min Beds"
           defaultValue="0"
+          type='number'
           onChange={(e) => setMinBeds(e.target.value)}
         />
         <TextField
           id="min-baths"
           label="Min Baths"
           defaultValue="0"
+          type='number'
           onChange={(e) => setMinBaths(e.target.value)}
         />
       </div>
@@ -53,6 +57,7 @@ const Filter = ({ handleApplyFilters }) => {
           id="min-sqft"
           label="Min SqFt"
           defaultValue="0"
+          type='number'
           onChange={(e) => setMinSqFt(e.target.value)}
         />
       </div>
