@@ -8,62 +8,66 @@ const Filter = ({ handleApplyFilters }) => {
   const [minBaths, setMinBaths] = useState(0);
   const [minSqFt, setMinSqFt] = useState(0);
 
-  const applyFilters = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     handleApplyFilters(minPrice,maxPrice,minBeds,minBaths,minSqFt);
   };
 
   return (
     <Box
-      component="form"
+      component='form'
+      onSubmit={handleSubmit}
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
-      autoComplete="off"
+      autoComplete='off'
     >
       <div>
         <TextField
-          id="min-price"
-          label="Min Price"
-          defaultValue="0"
+          id='min-price'
+          label='Min Price'
+          defaultValue='0'
           type='number'
           onChange={(e) => setMinPrice(e.target.value)}
         />
         <TextField
-          id="max-price"
-          label="Max Price"
-          defaultValue="0"
-          type='number'
+          id='max-price'
+          label='Max Price'
+          defaultValue='0'
           onChange={(e) => setMaxPrice(e.target.value)}
         />
       </div>
       <div>
         <TextField
-          id="min-beds"
-          label="Min Beds"
-          defaultValue="0"
+          id='min-beds'
+          label='Min Beds'
+          defaultValue='0'
           type='number'
           onChange={(e) => setMinBeds(e.target.value)}
         />
         <TextField
-          id="min-baths"
-          label="Min Baths"
-          defaultValue="0"
+          id='min-baths'
+          label='Min Baths'
+          defaultValue='0'
           type='number'
           onChange={(e) => setMinBaths(e.target.value)}
         />
       </div>
       <div>
         <TextField
-          id="min-sqft"
-          label="Min SqFt"
-          defaultValue="0"
+          id='min-sqft'
+          label='Min SqFt'
+          defaultValue='0'
           type='number'
           onChange={(e) => setMinSqFt(e.target.value)}
         />
       </div>
       <Divider sx={{ margin: '15px 0px'}} />
       <div>
-        <Button variant='contained' autoFocus onClick={applyFilters}>
+        <Button 
+          variant='contained' 
+          autoFocus 
+          type='submit'>
           Apply
         </Button>
       </div>
