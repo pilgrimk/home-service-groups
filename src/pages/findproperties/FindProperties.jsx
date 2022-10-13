@@ -6,14 +6,62 @@ import {
   InputLabel,
   Typography,
   Input,
-  Button
+  Button,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  styled
 } from '@mui/material'
-import { Properties } from '../../components'
+import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
+import { Properties, Filter } from '../../components'
 import prophelper from '../../helpers/FindPropertyHelper'
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 const FindProperties = () => {
   const [fileName, setFileName] = useState('');
   const [properties, setProperties] = useState([]);
+  const [allProperties, setAllProperties] = useState([]);
+  const [showFilterScreen, setShowFilterScreen] = useState(false);
   const [alertState, setAlertState] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
@@ -22,6 +70,7 @@ const FindProperties = () => {
     // clear the current data
     setFileName('');
     setProperties([]);
+    setAllProperties([]);
 
     try {
       if (file) {
@@ -44,6 +93,7 @@ const FindProperties = () => {
     // clear alerts and the current property data
     clearAlert();
     setProperties([]);
+    setAllProperties([]);
 
     try {
       console.log(`fileName: ${fileName}`);
@@ -51,12 +101,46 @@ const FindProperties = () => {
       if (res_prop !== 'undefined') {
         //console.log(res_prop);
         setProperties(res_prop);
+        setAllProperties(res_prop);
       }
     }
     catch (err) {
       console.log(err);
       setAlert('error', 'Something went wrong!');
     }
+  };
+
+  const handleShowDialog = () => {
+    setShowFilterScreen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setShowFilterScreen(false);
+  };
+
+  const applyFilters = ((data, minprice, maxprice, minbeds, minbaths, minsqft) => {
+    let response = data;
+    if (minprice > 0) {
+      response = response.filter((item) => parseInt(item.price) >= minprice);
+    }
+    if (maxprice > 0) {
+      response = response.filter((item) => parseInt(item.price) <= maxprice);
+    }
+    if (minbeds > 0) {
+      response = response.filter((item) => parseInt(item.beds) >= minbeds);
+    }
+    if (minbaths > 0) {
+      response = response.filter((item) => parseInt(item.baths) >= minbaths);
+    }
+    if (minsqft > 0) {
+      response = response.filter((item) => parseInt(item.sqFt) >= minsqft);
+    }    
+    return response
+  });
+
+  const handleApplyFilters = (minprice,maxprice,minbeds,minbaths,minsqft) => {
+    setProperties(applyFilters(allProperties,minprice,maxprice,minbeds,minbaths,minsqft));
+    handleCloseDialog();
   };
 
   const setAlert = (severity, message) => {
@@ -72,7 +156,7 @@ const FindProperties = () => {
   };
 
   return (
-    <div className='container-div' style={{ maxWidth: '90%', margin: '0px auto'}}>
+    <div className='container-div' style={{ maxWidth: '90%', margin: '0px auto' }}>
       {(alertState) ?
         (<Alert
           sx={{ m: '20px 0' }}
@@ -127,17 +211,42 @@ const FindProperties = () => {
         </Grid>
         <Grid item>
           {(properties.length > 0) &&
-            <Button
-              variant='contained'
-              color='success'
-            >
-              <CSVLink className="csvlink-btn" data={properties} filename={`${fileName}.csv`}>Export</CSVLink>
-            </Button>
+            <Box>
+              <Button
+                variant='contained'
+                sx={{ margin: '0 20px 0 0' }}
+                onClick={handleShowDialog}
+              >
+                Filters
+              </Button>
+              <Button
+                variant='contained'
+                color='success'
+              >
+                <CSVLink className="csvlink-btn" data={properties} filename={`${fileName}.csv`}>Export</CSVLink>
+              </Button>
+            </Box>
           }
         </Grid>
       </Grid>
 
       {(properties.length > 0) && <Properties properties={properties} />}
+
+      {/* Popup dialog area */}
+      <div>
+        <BootstrapDialog
+          onClose={handleCloseDialog}
+          aria-labelledby="customized-dialog-title"
+          open={showFilterScreen}
+        >
+          <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseDialog}>
+            Apply Filters
+          </BootstrapDialogTitle>
+          <DialogContent dividers>
+            <Filter handleApplyFilters={handleApplyFilters} />
+          </DialogContent>
+        </BootstrapDialog>
+      </div>
     </div>
   )
 }
