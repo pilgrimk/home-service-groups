@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CSVLink } from 'react-csv'
 import {
   Alert,
@@ -12,6 +12,8 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  Select,
+  MenuItem,
   styled
 } from '@mui/material'
 import PropTypes from 'prop-types';
@@ -65,6 +67,30 @@ const FindProperties = () => {
   const [alertState, setAlertState] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const handleChangeSelect = ({ target }) => { 
+    //console.log(target.value);
+    if(target.value !== 'undefined'){
+      setFileName(target.value);
+    }
+  };
+
+  const handleGetUploadedFileNames = async () => {
+    try {
+      const res_prop = await prophelper.getUploadedFileNames();
+      if (res_prop !== 'undefined') {
+        setUploadedFiles(res_prop);
+      }
+      else {
+        setUploadedFiles([]);
+      }
+    }
+    catch (err) {
+      console.log(err);
+      setAlert('error', 'Something went wrong!');
+    }
+  };
 
   const handleSetFileName = async (file) => {
     // clear the current data
@@ -134,12 +160,12 @@ const FindProperties = () => {
     }
     if (minsqft > 0) {
       response = response.filter((item) => parseInt(item.sqFt) >= minsqft);
-    }    
+    }
     return response
   });
 
-  const handleApplyFilters = (minprice,maxprice,minbeds,minbaths,minsqft) => {
-    setProperties(applyFilters(allProperties,minprice,maxprice,minbeds,minbaths,minsqft));
+  const handleApplyFilters = (minprice, maxprice, minbeds, minbaths, minsqft) => {
+    setProperties(applyFilters(allProperties, minprice, maxprice, minbeds, minbaths, minsqft));
     handleCloseDialog();
   };
 
@@ -154,6 +180,11 @@ const FindProperties = () => {
     setAlertSeverity('');
     setAlertMessage('');
   };
+
+  useEffect(() => {
+    handleGetUploadedFileNames();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='container-div' style={{ maxWidth: '90%', margin: '0px auto' }}>
@@ -170,7 +201,7 @@ const FindProperties = () => {
         )}
 
       <Typography variant='h2'>Find Properties</Typography>
-      <Grid container spacing={3} m='40px 20px'>
+      <Grid container spacing={2} m='40px 20px'>
         <Grid item>
           <Grid item>
             <InputLabel>File Name:</InputLabel>
@@ -185,6 +216,23 @@ const FindProperties = () => {
             value={fileName}
           />
         </Grid>
+        {(uploadedFiles.length > 0) &&
+          <Grid item>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value=''
+              onChange={handleChangeSelect}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {uploadedFiles.map((file) =>
+                <MenuItem key={file} value={file}>{file}</MenuItem>
+              )}
+            </Select>
+          </Grid>
+        }
         <Grid item>
           <Button
             variant='contained'

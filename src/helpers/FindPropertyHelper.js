@@ -13,7 +13,7 @@ const api = {
   uploadFile: function (file) {
     const urlString = `${process.env.REACT_APP_API}api/parser/uploadfile`;
 
-    // pass data to Heroku as FormData !
+    // pass data to server as FormData !
     const data = new FormData();
     data.append("uploadedFile", file);
 
@@ -22,11 +22,29 @@ const api = {
         //console.log(response);
       })
   },
+
+  getUploadedFiles: function () {
+    const urlString = `${process.env.REACT_APP_API}api/UploadedFiles`;
+
+    return axios.get(urlString)
+      .then(function (response) {
+        return response.data;
+      })
+  },
+
+  getUploadedFileNames: function () {
+    const urlString = `${process.env.REACT_APP_API}api/UploadedFiles/GetUploadedFileNames`;
+
+    return axios.get(urlString)
+      .then(function (response) {
+        return response.data;
+      })
+  },
   
   fetchProperties: function (fileName) {
     const urlString = `${process.env.REACT_APP_API}api/parser/parsefile`;
 
-    // pass data to Heroku as FormData !
+    // pass data to server as FormData !
     const data = new FormData();
     data.append("fileName", fileName);
 
