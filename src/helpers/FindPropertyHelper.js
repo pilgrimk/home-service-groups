@@ -34,6 +34,7 @@ const api = {
 
   getUploadedFileNames: function () {
     const urlString = `${process.env.REACT_APP_API}api/UploadedFiles/GetUploadedFileNames`;
+    console.log(urlString);
 
     return axios.get(urlString)
       .then(function (response) {
